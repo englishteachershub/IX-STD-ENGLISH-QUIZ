@@ -185,7 +185,7 @@ body{font-family:'Poppins',sans-serif;background:#0d1b2a;color:#fff;min-height:1
 <div class="screen active" id="s-welcome">
   <div class="hub-badge">🏫 English Teachers Hub Theni</div>
   <h1 class="title-main">9th Standard <span>English Quiz</span></h1>
-  <p class="subtitle">Synonyms & Antonyms • Units 1–7 • Academic Year 2024–2025</p>
+  <p class="subtitle">Synonyms & Antonyms • Units 1–7</p>
 
   <div class="card" style="max-width:480px;">
     <div class="card-title">Student Details</div>
@@ -329,7 +329,7 @@ body{font-family:'Poppins',sans-serif;background:#0d1b2a;color:#fff;min-height:1
       <table class="tbl">
         <thead><tr>
           <th>#</th><th>Type</th><th>Unit</th><th>Sentence &amp; Key Word</th>
-          <th>Your Answer</th><th>Correct Answer</th><th>✓/✗</th>
+          <th>Your Answer</th><th>Correct Answer</th><th>Result</th>
         </tr></thead>
         <tbody id="rev-body"></tbody>
       </table>
@@ -769,7 +769,7 @@ function doReview(){
       <td style="font-size:11px;">${plain}<br><small style="color:#e8b84b;">"${q.w}"</small></td>
       <td class="${a.correct?'c-ok':'c-ng'}" style="font-size:12px;">${q.o[a.chosen]}</td>
       <td class="c-ok" style="font-size:12px;">${q.o[q.a]}</td>
-      <td style="font-size:16px;text-align:center;">${a.correct?'✅':'❌'}</td>
+      <td style="text-align:center;font-weight:800;font-size:11px;color:${a.correct?'#2ecc71':'#e74c3c'}">${a.correct?'CORRECT':'WRONG'}</td>
     </tr>`;
   });
   show('s-review');
@@ -854,11 +854,11 @@ function dlPDF(){
     const q=a.q;
     const p=q.s.replace(/<b>/g,'').replace(/<\/b>/g,'');
     const snip=p.length>55?p.substring(0,55)+'…':p;
-    return[i+1,q.type==='synonym'?'SYN':'ANT',`Unit ${q.unit}`,snip,q.w,q.o[a.chosen],q.o[q.a],a.correct?'✓':'✗'];
+    return[i+1,q.type==='synonym'?'SYN':'ANT',`Unit ${q.unit}`,snip,q.w,q.o[a.chosen],q.o[q.a],a.correct?'CORRECT':'WRONG'];
   });
   doc.autoTable({
     startY:y+9,
-    head:[['#','Type','Unit','Sentence','Key Word','Your Answer','Correct Answer','✓/✗']],
+    head:[['#','Type','Unit','Sentence','Key Word','Your Answer','Correct Answer','Result']],
     body:dRows,theme:'striped',
     headStyles:{fillColor:[13,27,42],textColor:[232,184,75],fontSize:7,fontStyle:'bold'},
     bodyStyles:{fontSize:7,textColor:[30,30,30]},
@@ -867,7 +867,7 @@ function dlPDF(){
     didParseCell:(d)=>{
       if(d.section==='body'&&d.column.index===7){
         d.cell.styles.fontStyle='bold';
-        d.cell.styles.textColor=d.cell.text[0]==='✓'?[27,148,60]:[192,40,40];
+        d.cell.styles.textColor=d.cell.text[0]==='CORRECT'?[27,148,60]:[192,40,40];
       }
     },
     margin:{left:10,right:10}
